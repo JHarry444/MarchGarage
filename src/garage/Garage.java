@@ -3,6 +3,8 @@ package garage;
 import java.util.ArrayList;
 import java.util.List;
 
+import garage.exceptions.VehicleNotFoundException;
+
 public class Garage {
 
 	private List<Vehicle> vehicles = new ArrayList<>();
@@ -19,12 +21,15 @@ public class Garage {
 		return this.vehicles.remove(vehicle);
 	}
 
-	public void removeVehiclesByType(Class<?> clazz) {
+	public void removeVehiclesByType(Class<?> clazz) throws VehicleNotFoundException {
 		List<Vehicle> toRemove = new ArrayList<>();
 		for (Vehicle v : vehicles) {
 			if (v.getClass() == clazz) {
 				toRemove.add(v);
 			}
+		}
+		if (toRemove.isEmpty()) {
+			throw new VehicleNotFoundException();
 		}
 		vehicles.removeAll(toRemove);
 	}
